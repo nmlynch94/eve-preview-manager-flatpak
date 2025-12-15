@@ -1,0 +1,31 @@
+app-id: com.evepreview.test
+runtime: org.freedesktop.Platform
+runtime-version: &runtime-version "24.08"
+sdk: org.freedesktop.Sdk
+command: eve-preview-manager
+finish-args:
+  - --device=all
+  - --socket=x11
+  # - --socket=wayland
+  - --socket=pulseaudio
+  - --share=network
+sdk-extensions:
+  - org.freedesktop.Sdk.Extension.rust-stable
+modules:
+  - name: eve-preview-manager
+    buildsystem: simple
+    build-options:
+      append-path: /usr/lib/sdk/rust-stable/bin
+      env:
+        CARGO_HOME: /run/build/eve-preview-manager/cargo
+        CARGO_NET_OFFLINE: 'true'
+    build-commands:
+      - cargo --offline fetch --manifest-path Cargo.toml --verbose
+      - cargo --offline build --release --verbose
+      - install -Dm755 ./target/release/eve-preview-manager -t /app/bin/
+    sources:
+      - cargo-sources.json
+      - type: git
+        url: https://github.com/h0lylag/EVE-Preview-Manager
+        # tag: v1.2.0
+        commit: 13ca13614ca39a1a96df84bd86d264258e491756
