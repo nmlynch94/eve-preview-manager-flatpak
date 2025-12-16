@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=EVE Preview Manager
+Comment=Window preview manager for EVE Online
+Exec=eve-preview-manager
+Icon=com.eveonline.EVEPreviewManager
+Categories=Game;Utility;
+Terminal=false
+StartupNotify=true
